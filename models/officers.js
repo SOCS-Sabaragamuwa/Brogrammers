@@ -66,10 +66,16 @@ Officer.prototype.getOfficers = async function () {
         try {
 
             let {rows} = await pool.query(query);
+            var se = []
             rows.forEach(ele=>{
-
+                se.push({
+                    self:"http://localhost:9090/api/officers/"+ele.id.toString(),
+                    id:ele.id,
+                    employment_number:ele.employment_number,
+                    role:ele.role
+                })
             })
-            resolve(rows);
+            resolve(se);
 
         } catch (e) {
             console.log(e);
