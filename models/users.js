@@ -8,12 +8,12 @@ function User() {
 }
 
 User.prototype.createUser = async function (nic, mobile) {
-    let query = "insert into user(nic,mobile) values (?,?)";
+    let query = `insert into "user" ("nic", "mobile") values ($1, $2)`;
 
     return new Promise((async (resolve, reject) => {
         try {
 
-            let {rows} = await pool.query(query, [nic, mobile]);
+            let {rows} = await pool.query(query, [nic.toString(), mobile.toString()]);
             console.log(rows);
             resolve(rows);
 
