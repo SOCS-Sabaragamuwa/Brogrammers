@@ -27,7 +27,8 @@ The communication culture, communication channels and the contributing policies 
 •	Continuous deployment -not done in our project as we will validate every pull request
 
 ## Communication Channels
-- Slack channel: https://join.slack.com/t/letmehackbrogrammers/shared_invite/enQtOTMxODE4OTc3MjY4LTZkOGM4ZWY3YWNmNDVjYzVlMTViODFjODVjYTJlM2IwMWVkODBjN2YzOWY2YTBiOTJkYjExOTY2NWNiMmE0OWM
+- Slack channel: 
+letmehackbrogrammers.slack.com
 - Google mailing list:
 join the mailing list through google groups "let me hack brogrammers"
 
