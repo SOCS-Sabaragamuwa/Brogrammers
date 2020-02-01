@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
                 .is().max(8)                                  // Maximum length 8
                 .has().uppercase()                              // Must have uppercase letters
                 .has().lowercase()                              // Must have lowercase letters
-                .has(['~', '!', '@', '#', '$', '%', '^', '&', '*', '_', '-', '+', '=', '`', '|', '(', ')', '{', '}', '[', ']', '.', '?']);
+                .has('[~!@#$%^&*_-+=`|(){}[].?]');
 
             if (!schema.validate(password)) {
                 res.status(400).json({
