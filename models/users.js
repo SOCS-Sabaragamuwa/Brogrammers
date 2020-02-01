@@ -68,13 +68,14 @@ User.prototype.getUsers = async function () {
 };
 
 User.prototype.getUserByNIC = async function (nic) {
-    let query = "select * from public.user";
+    let query = "select * from public.user where nic=$1";
 
     return new Promise((async (resolve, reject) => {
         try {
 
-            let {rows} = await pool.query(query);
+            let {rows} = await pool.query(query,[nic]);
             //console.log(rows);
+        
             resolve(rows);
 
         } catch (e) {

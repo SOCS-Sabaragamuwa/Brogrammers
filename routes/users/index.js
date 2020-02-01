@@ -32,7 +32,8 @@ router.post('/', async (req, res) => {
     let json_response = {};
     try {
         let previous_nic = await user.getUserByNIC(nic);
-        if (previous_nic) {
+        console.log(previous_nic)
+        if (previous_nic.length>0) {
             res.status(409).json({
                 "message": `A user with nic: ${nic} already exists`,
                 "developerMessage": `User creation failed because the nic: ${nic} already exists`
@@ -45,7 +46,7 @@ router.post('/', async (req, res) => {
                 .is().max(8)                                  // Maximum length 8
                 .has().uppercase()                              // Must have uppercase letters
                 .has().lowercase()                              // Must have lowercase letters
-                .has('[~!@#$%^&*_-+=`|(){}[].?]');
+                .has('/[~!@#$%^&*_-+=`|(){}[].?]+/g');
 
             if (!schema.validate(password)) {
                 res.status(400).json({
