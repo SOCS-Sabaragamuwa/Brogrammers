@@ -6,25 +6,25 @@ const path = require('path');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-// const swaggerOptions = {
-//     swaggerDefinition: {
-//         info: {
-//             title: 'Brogrannmmers',
-//             description: "https://github.com/rumeshmadhusanka/DB-API",
-//             contact: {
-//                 name: 'https://github.com/rumeshmadhusanka/DB-API'
-//             },
-//             host: 'http://localhost:3000',
-//             basePath: '/'
-//         }
-//     },
-//     apis: ['./routes/**/**.yaml']
-// };
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'Brogrannmmers',
+            description: "https://github.com/rumeshmadhusanka/DB-API",
+            contact: {
+                name: 'https://github.com/rumeshmadhusanka/DB-API'
+            },
+            host: 'http://localhost:3000',
+            basePath: '/'
+        }
+    },
+    apis: ['./routes/**/**.yaml']
+};
 
-// const swaggerDocs = swaggerJsDoc(swaggerOptions);
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// app.use(express.json()); 
+app.use(express.json());
 
 
 app.use((req, res, next) => {
@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 routes(app);
 
 //server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9090;
 app.listen(port, () => {
     console.log("Server is listening to port " + port);
 });
