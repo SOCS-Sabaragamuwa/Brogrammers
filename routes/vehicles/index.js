@@ -33,7 +33,8 @@ router.post("/", async (req, res) => {
 
 validateVehicleNumber=(num)=>{
     console.log(num)
-    if(num.includes("-")){
+    
+    if(num && num.includes("-")){
         let set = num.split("-")
         console.log(set)
         if((set[0].length===2 || set[0].length===3 ) && set[1].length==4 ){
