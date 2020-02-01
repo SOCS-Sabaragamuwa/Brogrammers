@@ -7,7 +7,7 @@
     "dev": "nodemon -e yaml,js,json index.js",
     "start": "node index.js",
     "stop": "pm2 delete db-backend",
-    "test": "mocha --recursive"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
