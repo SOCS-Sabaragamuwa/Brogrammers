@@ -4,6 +4,12 @@ Welcome to the Garbage Management System designed by SOCSSabaragamuwa. We are de
 
 The communication culture, communication channels and the contributing policies as well as the documentation best practices are given below.
 
+## DevOps Stages
+•	Version Control- Source code management is done with git and who does the change is also recorded with git. With proper documentation policies and pull request templates the version control is addressed in our project.
+•	Continuous integration -jenkins 
+•	Continuous delivery -jenkins
+•	Continuous deployment -not done in our project as we will validate every pull request
+
 ## Communication Channels
 - Slack channel: https://join.slack.com/t/letmehackbrogrammers/shared_invite/enQtOTMxODE4OTc3MjY4LTZkOGM4ZWY3YWNmNDVjYzVlMTViODFjODVjYTJlM2IwMWVkODBjN2YzOWY2YTBiOTJkYjExOTY2NWNiMmE0OWM
 - Google mailing list:
