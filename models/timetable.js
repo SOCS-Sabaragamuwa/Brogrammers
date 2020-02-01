@@ -22,11 +22,11 @@ Timetable.prototype.createEntry = async function({
       let officer = await getOfficer(officer_id, reject);
       let vehicle = await getVehicle(vehicle_id, reject);
       let route = await getRoute(route_id, reject);
-      console.log(officer,vehicle,route)
-      if(officer==null ||vehicle==null ||route==null) {
-        console.log("Reject")
+      console.log(officer, vehicle, route);
+      if (officer == null || vehicle == null || route == null) {
+        console.log("Reject");
         reject({ code: 404 });
-        return
+        return;
       }
       let a = await pool.query(query, [
         start_time,
@@ -105,7 +105,7 @@ async function getRoute(id, reject) {
   let query1 = "SELECT * FROM route where id=$1;";
   try {
     let { rows } = await pool.query(query1, [id]);
-    if (rows.length === 0) reject({ code: 404});
+    if (rows.length === 0) reject({ code: 404 });
     let se = [];
     rows.forEach(ele => {
       se.push({
@@ -124,15 +124,15 @@ Timetable.prototype.getTimetable = async function(timetable_id) {
 
   return new Promise(async (resolve, reject) => {
     try {
-      let { rows } = await pool.query(query,[timetable_id]);
+      let { rows } = await pool.query(query, [timetable_id]);
       var se = [];
-      if(rows.length===0){
+      if (rows.length === 0) {
         reject({
-          code:404,
-          message: `No value present timetable_id: ${ timetable_id}`,
+          code: 404,
+          message: `No value present timetable_id: ${timetable_id}`,
           developerMessage: `No value present timetable_id: ${timetable_id}`
-       })
-       return
+        });
+        return;
       }
       let officer = await getOfficer(rows[0].officer_id, reject);
       let vehicle = await getVehicle(rows[0].vehicle_id, reject);
@@ -140,7 +140,7 @@ Timetable.prototype.getTimetable = async function(timetable_id) {
       rows.forEach(ele => {
         se.push({
           self: "http://localhost:9090/api/timetables/" + ele.id.toString(),
-          id:ele.id,
+          id: ele.id,
           start_time: ele.start_time,
           end_time: ele.end_time,
           day: ele.day,
@@ -150,6 +150,76 @@ Timetable.prototype.getTimetable = async function(timetable_id) {
         });
       });
       resolve(se[0]);
+    } catch (e) {
+      console.log(e);
+      logger.log(e);
+      reject(new ErrorHandler(502, "Internal Server Error"));
+    }
+  });
+};
+Timetable.prototype.getTimetableByQuery = async function(
+  vehicle_id,
+  officer_id,
+  route_id
+) {
+  console.log("gooo")
+
+  let query = "select * from public.timetable";
+  return new Promise(async (resolve, reject) => {
+    try {
+      let { rows } = await pool.query(query);
+      let se = [];
+      let filter1 = [];
+      rows.forEach(ele => {
+        if (vehicle_id) {
+          if (ele.vehicle_id === parseInt(vehicle_id)) {
+            filter1.push(ele);
+          }
+        } else {
+          filter1.push(ele);
+        }
+      });
+      console.log(filter1)
+      let filter2 = [];
+      filter1.forEach(ele => {
+        if (officer_id) {
+          if (ele.officer_id === parseInt(officer_id)) {
+            filter2.push(ele);
+          }
+        } else {
+          filter2.push(ele);
+        }
+      });
+      let filter3 = [];
+      filter2.forEach(ele => {
+        if (route_id) {
+          if (ele.route_id === parseInt(route_id)) {
+            filter3.push(ele);
+          }
+        } else {
+          filter3.push(ele);
+        }
+      });
+
+      for (let i = 0; i < filter3.length; i++) {
+        let officer = await getOfficer(filter3[i].officer_id, reject);
+        let vehicle = await getVehicle(filter3[i].vehicle_id, reject);
+        let route = await getRoute(filter3[i].route_id, reject);
+
+        se.push({
+          self:
+            "http://localhost:9090/api/timetables/" + filter3[i].id.toString(),
+          id: filter3[i].id,
+          start_time: filter3[i].start_time,
+          end_time: filter3[i].end_time,
+          day: filter3[i].day,
+          officer,
+          vehicle,
+          route
+        });
+      }
+      console.log(se);
+      resolve(se);
     } catch (e) {
       console.log(e);
       logger.log(e);
