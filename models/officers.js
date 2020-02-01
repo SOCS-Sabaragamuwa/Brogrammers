@@ -27,7 +27,7 @@ Officer.prototype.createOfficerDefault = async function (emp_no) {
             resolve(se);
 
         } catch (e) {
-            reject({statusCode:409,message: `Officer with employment_number:${emp_no} already exists`,
+            reject({statusCode:409,message: `Officer with employment_number: ${emp_no} already exists`,
             developerMessage: `Officer creation failed because the employment_number: ${emp_no} already exists`}
          );}
     }));
