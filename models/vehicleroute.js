@@ -25,7 +25,7 @@ Vehicleroute.prototype.createVehicleroute = async function (route_name) {
                     route_name:ele.route_name
                 })
             })
-            resolve(se);}
+            resolve(se[0]);}
             else{
                 reject({statusCode:409,message: `A route with route_name: ${route_name} already exists`,
                 developerMessage: `Route creation failed because the route_name: ${route_name} already exists`}

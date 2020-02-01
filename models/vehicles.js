@@ -25,12 +25,12 @@ Vehicle.prototype.createVehicle = async function (number) {
                     vehicle_number:ele.number
                 })
             })
-            resolve(se);
+            resolve(se[0]);
 
         }else{
             
-            reject({statusCode:409,message: `A vehicle with vehicle_number:${number} already exists`,
-            developerMessage: `Vehicle creation failed because the vehicle_number:${number} already exists`}
+            reject({statusCode:409,message: `A vehicle with vehicle_number: ${number} already exists`,
+            developerMessage: `Vehicle creation failed because the vehicle_number: ${number} already exists`}
          );
 
         }
