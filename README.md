@@ -8,10 +8,17 @@ The communication culture, communication channels and the contributing policies 
 
 ![Workflow](https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2019/06/155993572204-gitflow.png)
 
+
+## Coding Best Practises that were followed.
+- Used `Promises`
+- Used `ES-6`
+- Centralized error handling
+- Logging with `Winston`
+
 ## DevOps Stages
 •	Version Control- Source code management is done with git and who does the change is also recorded with git. With proper documentation policies and pull request templates the version control is addressed in our project.
-•	Continuous integration -jenkins 
-•	Continuous delivery -jenkins
+•	Continuous integration -Travis 
+•	Continuous delivery -Travis
 •	Continuous deployment -not done in our project as we will validate every pull request
 
 ## Communication Channels
@@ -50,9 +57,12 @@ If you need help, you can ask questions on our mailing list and the slack channe
 
 ## Install
 
-Create a database from heroku and import the database schema 
+Create a `postgreSQL` database from Heroku and import the database schema 
 Install the prerequisites and set up the environment with npm install
 Experience the developed system...
+
+## Schema
+![Schema](schema.png)
 
 ## Start with docker
 
