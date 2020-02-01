@@ -14,9 +14,7 @@ router.post("/", async (req, res) => {
   try {
     var results = null;
     results = await vehicle.createVehicle(number);
-    json_response = {
-      vehicles: results
-    };
+    json_response = results;
     res.status(201).json(json_response);
   } catch (e) {
     if (e.statusCode == 409){
