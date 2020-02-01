@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     let officer = new Officer();
     let json_response = {};
     
-    if(!emp_no || (emp_no && typeof emp_no != "number") || (role && !isIn(role))){
+    if(!emp_no || (role && !isIn(role))){
         res.status(400).send()
         return
     }
