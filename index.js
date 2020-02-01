@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const routes = require('./routes');
 const bodyParser = require('body-parser');
-const path = require('path');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -38,8 +37,8 @@ app.use((req, res, next) => {
 });
 
 
-//serving static files from public folder
-app.use('/public', express.static(path.resolve(__dirname, './public')));
+// //serving static files from public folder
+// app.use('/public', express.static(path.resolve(__dirname, './public')));
 
 
 // support parsing of application/json type post data
