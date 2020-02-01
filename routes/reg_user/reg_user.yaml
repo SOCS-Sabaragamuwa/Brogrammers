@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: SOCS Sabaragamuwa
+  description:
+  version: 1.0.0
+tags:
+  - name: Registered User
+    description: User management
+paths:
+  "/reg_user/{user_id}":
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Registered User
+      summary: Get info by user id
+      parameters:
+        - name: user_id
+          in: path
+          description: user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: number
+                        first_names:
+                          type: string
+                        second_name:
+                          type: string
+                        email:
+                          type: string
+                        nic:
+                          type: string
+                        passport_id:
+                          type: string
+                        username:
+                          type: string
+                  token:
+                    type: string
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "502":
+          description: Server Error
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Registered User
+      summary: Update user
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+        "404":
+          description: User not Found
+    delete:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Registered User
+      summary: Delete a user
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+        "404":
+          description: User not Found
+  /reg_user/:
+    post:
+      tags:
+        - Registered User
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      summary: Create a new User
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad request
+        "502":
+          description: Server Error
+  "/reg_user/{user_id}/booking":
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Registered User
+      summary: Get all the bookings by the customer
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+        "502":
+          description: Server Error
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Registered User
+      summary: Create a new booking
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "502":
+          description: Server Error
+  /reg_user/login/:
+    post:
+      tags:
+        - Registered User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: jaya@gmail.com
+                password:
+                  type: string
+                  example: abc
+      responses:
+        "200":
+          description: Login Success, Token created
+        "400":
+          description: Bad request
+        "502":
+          description: Server Error
+servers:
+  - url: http://localhost:3000
+components:
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - first_name
+              - second_name
+              - email
+              - nic
+              - passport_id
+              - birthday
+              - username
+              - password
+            properties:
+              first_name:
+                type: string
+              second_name:
+                type: string
+              email:
+                type: string
+              nic:
+                type: string
+              passport_id:
+                type: string
+              birthday:
+                type: string
+              username:
+                type: string
+              password:
+                type: string
+      description: users details
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-access-token
+
