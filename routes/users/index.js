@@ -11,12 +11,12 @@ router.post('/', async (req, res) => {
     if (!nic) {
         res.status(400).json({
             "message": "Nic no is not set",
-            "developerMessage": " User creation failed because the nic no is not set"
+            "developerMessage": "User creation failed because the nic no is not set"
         })
     } else if (!mobile) {
         res.status(400).json({
             "message": "Mobile no is not set",
-            "developerMessage": " User creation failed because the mobile no is not set"
+            "developerMessage": "User creation failed because the mobile no is not set"
         })
 
     } else if (!(
