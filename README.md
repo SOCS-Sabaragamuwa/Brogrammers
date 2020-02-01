@@ -1,4 +1,4 @@
-###### Garbage Management API
+## Garbage Management API
 
 Welcome to the Garbage Management System designed by SOCSSabaragamuwa. We are delighted to accompany you throughout this journey to go green.
 
@@ -47,11 +47,8 @@ If you need help, you can ask questions on our mailing list and the slack channe
 ## Install
 
 Create a database from heroku and import the database schema 
-```
-> npm install 
-```
-
-
+Install the prerequisites and set up the environment with npm install
+Experience the developed system...
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
