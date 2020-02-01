@@ -25,7 +25,7 @@ Vehicle.prototype.createVehicle = async function (number) {
                     vehicle_number:ele.number
                 })
             })
-            resolve(se);
+            resolve(se[0]);
 
         }else{
             
