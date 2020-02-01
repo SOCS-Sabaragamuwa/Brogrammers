@@ -9,5 +9,5 @@ services:
       NODE_ENV: development
     ports:
       - 9090:9090
-    command: npm run dev
+    command: npm start
     network_mode: "host"
