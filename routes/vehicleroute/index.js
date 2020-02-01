@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
         res.status(201).json(json_response);
     } catch (e) {
         if (e.statusCode == 409){
-            console.log(e.massage)
             json_response.message = e.message;
             json_response.developerMessage = e.developerMessage;
             res.status(e.statusCode).json(json_response);
