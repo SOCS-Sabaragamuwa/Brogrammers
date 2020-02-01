@@ -21,8 +21,8 @@ router.post("/", async (req, res) => {
     });
   } else if (
     !(
-      (nic.length === 9 && nic[nic.length - 1] === "V") ||
-      (nic.length === 12 && typeof nic === "number") ||
+      ((nic.length === 9 && nic[nic.length - 1] === "V") ||
+      (nic.length === 12 && typeof nic === "number")) &&
       mobile.slice(0, 3) === "+94"
     )
   ) {
