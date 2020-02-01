@@ -8,13 +8,13 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
-            title: 'Brogrannmmers',
-            description: "https://github.com/rumeshmadhusanka/DB-API",
+            title: 'Brogrammers',
+            description: "https://github.com/SOCSSabaragamuwa/Brogrammers",
             contact: {
-                name: 'https://github.com/rumeshmadhusanka/DB-API'
+                name: 'https://github.com/SOCSSabaragamuwa/Brogrammers'
             },
-            host: 'http://localhost:3000',
-            basePath: '/'
+            host: 'http://localhost:9090',
+            basePath: '/api'
         }
     },
     apis: ['./routes/**/**.yaml']

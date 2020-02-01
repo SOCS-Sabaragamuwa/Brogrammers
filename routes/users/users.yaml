@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  title: SOCS Sabaragamuwa Brogrammers
+  description: A detailed description of the operation.
+    Use markdown for rich text representation,
+    such as **bold**, *italic*, and [links](https://swagger.io).
+  version: 1.0.0
+host: localhost:3000
+schemes:
+  - http
+tags:
+  - name: User
+    description: User management
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: x-access-token
+paths:
+  api/user/:
+    post:
+      tags:
+        - User
+      parameters:
+        - in: body
+          name: user
+          description: Create new user
+          schema:
+            type: object
+            required:
+              - nic
+              - mobile
+            properties:
+              nic:
+                type: string
+              mobile:
+                type: number
+      produces:
+        - application/json
+      summary: Create a new User
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request
+
+
+
+            
