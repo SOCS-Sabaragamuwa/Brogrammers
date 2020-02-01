@@ -60,4 +60,30 @@ router.get("/:timetable_id", async (req, res) => {
   }
 });
 
+
+router.get("/", async (req, res) => {
+  let timetable = new Timetable();
+  let vehicle_id = req.query.vehicle_id;
+  let officer_id = req.query.officer_id;
+  let route_id = req.query.route_id;
+  let json_response = [];
+  try {
+    console.log(req.query)
+
+    let result = await timetable.getTimetableByQuery(vehicle_id,officer_id,route_id);
+    json_response = result ;
+    res.status(200).json(json_response);
+  } catch (e) {
+    if (e.code === 404) {
+      json_response.message = e.message;
+      json_response.developerMessage = e.developerMessage;
+      res.status(404).json(json_response).send();
+      return;
+    }
+    console.log(e)
+    res.status(502).send();
+  }
+});
+
+
 module.exports = router;
