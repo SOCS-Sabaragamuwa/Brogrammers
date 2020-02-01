@@ -67,4 +67,22 @@ User.prototype.getUsers = async function () {
     }));
 };
 
+User.prototype.getUserByNIC = async function (nic) {
+    let query = "select * from public.user";
+
+    return new Promise((async (resolve, reject) => {
+        try {
+
+            let {rows} = await pool.query(query);
+            //console.log(rows);
+            resolve(rows);
+
+        } catch (e) {
+            console.log(e);
+            logger.log(e);
+            reject(new ErrorHandler(502, "Internal Server Error"));
+        }
+    }));
+};
+
 module.exports = User;
