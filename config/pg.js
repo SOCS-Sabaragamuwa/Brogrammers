@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path =  require("path");
 const pgConfig = {
     user: 'dwacdnmvgairhp',
     host: 'ec2-54-92-174-171.compute-1.amazonaws.com',

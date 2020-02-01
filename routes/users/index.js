@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const User = require("../../models/users");
 const pool = require("../../db");
+const passwordValidator = require('password-validator');
 
 //Create user Route
 router.post('/', async (req, res) => {
     let nic = req.body.nic;
     let mobile = req.body.mobile;
+    let password = req.body.password;
     if (!nic) {
         res.status(400).json({
             "message": "Nic no is not set",
@@ -20,19 +22,34 @@ router.post('/', async (req, res) => {
     let user = new User();
     let json_response = {};
     try {
-        console.log(nic, mobile);
-        let results = await user.createUser(nic,mobile);
-        res.status(201).json(json_response);
+        if (password) {
+            let schema = new passwordValidator();
+            schema
+                .is().min(6)                                    // Minimum length 6
+                .is().max(8)                                  // Maximum length 8
+                .has().uppercase()                              // Must have uppercase letters
+                .has().lowercase()                              // Must have lowercase letters
+                .has().oneOf(['~', '!', '@', '#', '$', '%', '^', '&', '*', '_', '-', '+', '=', '`', '|', '(', ')', '{', '}', '[', ']', '.', '?']);
+
+            if (!schema.validate(password)) {
+                res.status(400).json({
+                    "message": "Password complexity requirement not met",
+                    "developerMessage": "User creation failed because password complexity requirement not met"
+                });
+            } else {
+                //hash password
+
+                let results = await user.createUserWithPassword(nic, mobile, password);
+                res.status(201).end();
+            }
+
+        } else {
+            console.log(nic, mobile);
+            let results = await user.createUser(nic, mobile);
+            res.status(201).json(json_response);
+        }
     } catch (e) {
-        // json_response.message = e;
-        // let code = e.statusCode || 502;
-        // if (e._message == null && e.details[0].message) {
-        //     code = 400;
-        //     json_response.message = e.details[0].message;
-        //     res.status(code).end();
-        // } else {
-        //     res.status(code).end();
-        // }
+
         res.status(502).send();
     }
 });
