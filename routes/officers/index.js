@@ -8,7 +8,11 @@ router.post('/', async (req, res) => {
     let role = req.body.role;
     let officer = new Officer();
     let json_response = {};
-    console.log(emp_no)
+    
+    if(!emp_no || (emp_no && typeof emp_no != "number") || (role && !isIn(role))){
+        res.status(400).send()
+        return
+    }
     try {
         var results = null
         if(!role)
@@ -20,18 +24,25 @@ router.post('/', async (req, res) => {
         }
         res.status(201).json(json_response);
     } catch (e) {
-        json_response.message = e;
-        let code = e.statusCode || 502;
-        if (e._message == null && e.details[0].message) {
-            code = 400;
-            json_response.message = e.details[0].message;
-            res.status(code).json(json_response);
-        } else {
+        if (e.statusCode == 409){
+            console.log(e.massage)
+            json_response.message = e.message;
+            json_response.developerMessage = e.developerMessage;
+            res.status(e.statusCode).json(json_response);
+        }
+         else {
             res.status(code).json(json_response);
         }
         res.status(502).send();
     }
 });
+
+function isIn(val){
+    if(val==="employee"||val==="admin"||val==="super-admin"){
+        return true
+    }
+    return false
+}
 
 router.get('/', async (req, res) => {
 

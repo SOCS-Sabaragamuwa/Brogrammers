@@ -27,10 +27,9 @@ Officer.prototype.createOfficerDefault = async function (emp_no) {
             resolve(se);
 
         } catch (e) {
-            console.log(e);
-            logger.log(e);
-            reject(new ErrorHandler(502, "Internal Server Error"));
-        }
+            reject({statusCode:409,message: `Officer with employment_number: ${emp_no} already exists`,
+            developerMessage: `Officer creation failed because the employment_number: ${emp_no} already exists`}
+         );}
     }));
 };
 Officer.prototype.createOfficer = async function (emp_no,role) {
@@ -53,9 +52,9 @@ Officer.prototype.createOfficer = async function (emp_no,role) {
             resolve(se);
 
         } catch (e) {
-            console.log(e);
-            logger.log(e);
-            reject(new ErrorHandler(502, "Internal Server Error"));
+            reject({statusCode:409,message: `Officer with employment_number:${emp_no} already exists`,
+            developerMessage: `Officer creation failed because the employment_number: ${emp_no} already exists`}
+         );
         }
     }));
 };
