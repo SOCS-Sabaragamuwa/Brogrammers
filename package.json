@@ -7,7 +7,7 @@
     "dev": "nodemon -e yaml,js,json index.js",
     "start": "node index.js",
     "stop": "pm2 delete db-backend",
-    "test": "mocha --recursive"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^3.5.3",
     "supertest": "^4.0.2",
     "nodemon": "^1.17.3"
   }
