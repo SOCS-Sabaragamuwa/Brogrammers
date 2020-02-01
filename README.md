@@ -14,6 +14,11 @@ The communication culture, communication channels and the contributing policies 
 - Used `ES-6`
 - Centralized error handling
 - Logging with `Winston`
+- PostgreSQL with connection pooling.
+- Password Hashing using `bcrypt`
+- CI with heroku
+- Dockerized
+- API documentation with swagger(OpenAPI 2.0)
 
 ## DevOps Stages
 •	Version Control- Source code management is done with git and who does the change is also recorded with git. With proper documentation policies and pull request templates the version control is addressed in our project.
