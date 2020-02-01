@@ -18,10 +18,26 @@ router.post('/', async (req, res) => {
             "message": "Mobile no is not set",
             "developerMessage": " User creation failed because the mobile no is not set"
         })
+
+    } else if (!(
+        (nic.length === 9 && nic[nic.length - 1] === "V")
+        || (nic.length === 12 && typeof nic === "number")
+        || (mobile.slice(0,3)==="+94")
+    )) {
+        res.status(400).end();
     }
+
+
     let user = new User();
     let json_response = {};
     try {
+        let previous_nic = await user.getUserByNIC(nic);
+        if (previous_nic) {
+            res.status(409).json({
+                "message": `A user with nic: ${nic} already exists`,
+                "developerMessage": `User creation failed because the nic: ${nic} already exists`
+            });
+        }
         if (password) {
             let schema = new passwordValidator();
             schema
@@ -29,7 +45,7 @@ router.post('/', async (req, res) => {
                 .is().max(8)                                  // Maximum length 8
                 .has().uppercase()                              // Must have uppercase letters
                 .has().lowercase()                              // Must have lowercase letters
-                .has().oneOf(['~', '!', '@', '#', '$', '%', '^', '&', '*', '_', '-', '+', '=', '`', '|', '(', ')', '{', '}', '[', ']', '.', '?']);
+                .has(['~', '!', '@', '#', '$', '%', '^', '&', '*', '_', '-', '+', '=', '`', '|', '(', ')', '{', '}', '[', ']', '.', '?']);
 
             if (!schema.validate(password)) {
                 res.status(400).json({
