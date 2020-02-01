@@ -31,15 +31,28 @@ User.prototype.createUserWithPassword = async function (nic, mobile, password) {
     let query = `insert into "user" ("nic", "mobile", "password")
                  values ($1, $2, $3)`;
 
-
+    let query2 = `select id,nic,mobile from public.user where nic = $1`
 
     return new Promise((async (resolve, reject) => {
         try {
             let hashedPassword = bcrypt.hashSync(password, 10);
+            console.log(nic,mobile,hashedPassword);
 
-            let {rows} = await pool.query(query, [nic, mobile, hashedPassword]);
-            console.log(rows);
-            resolve(rows);
+            let {rowCount} = await pool.query(query, [nic, mobile, hashedPassword]);
+            if(rowCount>0){
+                let {rows} = await pool.query(query2, [nic]);
+                resolve({
+                    self:"http://localhost:9090/api/users/"+rows[0].id.toString(),
+                    nic:rows[0].nic,
+                    mobile:rows[0].mobile
+                })
+            }else {
+                reject({
+                    code:409,
+                    message: `A user with nic: ${nic} already exists`,
+                    developerMessage: `User creation failed because the nic: ${nic} already exists`
+               })
+            }
 
         } catch (e) {
             console.log(e);
