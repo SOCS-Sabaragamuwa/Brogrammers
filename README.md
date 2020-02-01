@@ -78,4 +78,4 @@ Experience the developed system...
 http:localhost:9090/api-docs
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/) license.
