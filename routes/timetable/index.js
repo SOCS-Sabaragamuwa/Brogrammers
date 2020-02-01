@@ -20,10 +20,10 @@ router.post("/", async (req, res) => {
     vehicle_id == null ||
     route_id == null
   ) {
-    res.status(400).send()
+    res.status(400).send();
     return;
   }
- 
+
   let timetable = new Timetable();
   let json_response = {};
   try {
@@ -34,24 +34,28 @@ router.post("/", async (req, res) => {
     };
     res.status(201).json(json_response);
   } catch (e) {
-    if(e.code===404){
-        res.status(404).send()
+    if (e.code === 404) {
+      res.status(404).send();
     }
   }
 });
 
-router.get("/", async (req, res) => {
-  let officer = new Officer();
+router.get("/:timetable_id", async (req, res) => {
+  let timetable = new Timetable();
+  let timetable_id = req.params.timetable_id;
   let json_response = {};
   try {
-    let result = await officer.getOfficers();
+    let result = await timetable.getTimetable(timetable_id);
     console.log(result);
-    json_response = { officers: result };
+    json_response = { ...result };
     res.status(200).json(json_response);
   } catch (e) {
-    json_response.message = e;
-    let code = e.statusCode || 502;
-    console.log(e);
+    if (e.code === 404) {
+      json_response.message = e.message;
+      json_response.developerMessage = e.developerMessage;
+      res.status(404).json(json_response).send();
+      return;
+    }
     res.status(502).send();
   }
 });

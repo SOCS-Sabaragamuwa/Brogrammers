@@ -119,22 +119,37 @@ async function getRoute(id, reject) {
   }
 }
 
-Timetable.prototype.getTimetable = async function() {
-  let query = "select * from public.timetable";
+Timetable.prototype.getTimetable = async function(timetable_id) {
+  let query = "select * from public.timetable where id=$1";
 
   return new Promise(async (resolve, reject) => {
     try {
-      let { rows } = await pool.query(query);
+      let { rows } = await pool.query(query,[timetable_id]);
       var se = [];
+      if(rows.length===0){
+        reject({
+          code:404,
+          message: `No value present timetable_id: ${ timetable_id}`,
+          developerMessage: `No value present timetable_id: ${timetable_id}`
+       })
+       return
+      }
+      let officer = await getOfficer(rows[0].officer_id, reject);
+      let vehicle = await getVehicle(rows[0].vehicle_id, reject);
+      let route = await getRoute(rows[0].route_id, reject);
       rows.forEach(ele => {
         se.push({
-          self: "http://localhost:9090/api/officers/" + ele.id.toString(),
-          id: ele.id,
-          employment_number: ele.employment_number,
-          role: ele.role
+          self: "http://localhost:9090/api/timetables/" + ele.id.toString(),
+          id:ele.id,
+          start_time: ele.start_time,
+          end_time: ele.end_time,
+          day: ele.day,
+          officer,
+          vehicle,
+          route
         });
       });
-      resolve(se);
+      resolve(se[0]);
     } catch (e) {
       console.log(e);
       logger.log(e);
