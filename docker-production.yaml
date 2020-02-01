@@ -1,4 +1,4 @@
-FROM node:apline
+FROM node:alpine
 # app dir
 WORKDIR /usr/src/app
 # copy package and package-lock
@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 80
+EXPOSE 9090
 
 CMD [ "node", "index.js" ]
