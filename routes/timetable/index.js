@@ -20,8 +20,10 @@ router.post("/", async (req, res) => {
     vehicle_id == null ||
     route_id == null
   ) {
+    res.status(400).send()
     return;
   }
+ 
   let timetable = new Timetable();
   let json_response = {};
   try {
@@ -32,8 +34,8 @@ router.post("/", async (req, res) => {
     };
     res.status(201).json(json_response);
   } catch (e) {
-    if(e.code===400){
-        res.status(400).send()
+    if(e.code===404){
+        res.status(404).send()
     }
   }
 });

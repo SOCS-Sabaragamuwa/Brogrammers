@@ -22,7 +22,12 @@ Timetable.prototype.createEntry = async function({
       let officer = await getOfficer(officer_id, reject);
       let vehicle = await getVehicle(vehicle_id, reject);
       let route = await getRoute(route_id, reject);
-      if(officer==null ||vehicle==null ||route==null) return
+      console.log(officer,vehicle,route)
+      if(officer==null ||vehicle==null ||route==null) {
+        console.log("Reject")
+        reject({ code: 404 });
+        return
+      }
       let a = await pool.query(query, [
         start_time,
         end_time,
@@ -65,9 +70,8 @@ async function getOfficer(id, reject) {
   let query = "SELECT * FROM officer where id=$1;";
   try {
     let { rows } = await pool.query(query, [id]);
-    console.log(rows);
     var se = [];
-    if (rows.length === 0) reject({ code: 400 });
+    if (rows.length === 0) reject({ code: 404 });
     rows.forEach(ele => {
       se.push({
         self: "http://localhost:9090/api/officers/" + ele.id.toString(),
@@ -76,7 +80,6 @@ async function getOfficer(id, reject) {
     });
     return se[0];
   } catch (e) {
-    console.log(e);
     reject({ code: 400 });
   }
 }
@@ -85,7 +88,7 @@ async function getVehicle(id, reject) {
   try {
     let { rows } = await pool.query(query, [id]);
     let se = [];
-    if (rows.length === 0) reject({ code: 400 });
+    if (rows.length === 0) reject({ code: 404 });
     rows.forEach(ele => {
       se.push({
         self: "http://localhost:9090/api/vehicles/" + ele.vehicle_id.toString(),
@@ -102,9 +105,8 @@ async function getRoute(id, reject) {
   let query1 = "SELECT * FROM route where id=$1;";
   try {
     let { rows } = await pool.query(query1, [id]);
-    if (rows.length === 0) reject({ code: 400 });
+    if (rows.length === 0) reject({ code: 404});
     let se = [];
-    console.log(rows);
     rows.forEach(ele => {
       se.push({
         self: "http://localhost:9090/api/routes/" + ele.id.toString(),
