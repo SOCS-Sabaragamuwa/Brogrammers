@@ -1,4 +1,4 @@
-## Garbage Management API
+## Eco Waste Management System
 
 Welcome to the Garbage Management System designed by SOCSSabaragamuwa. We are delighted to accompany you throughout this journey to go green.
 
