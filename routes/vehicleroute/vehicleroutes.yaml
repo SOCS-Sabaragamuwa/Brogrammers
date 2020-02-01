@@ -1,0 +1,51 @@
+swagger: "2.0"
+info:
+  title: SOCS Sabaragamuwa Brogrammers
+  description: A detailed description of the operation.
+    Use markdown for rich text representation,
+    such as **bold**, *italic*, and [links](https://swagger.io).
+  version: 1.0.0
+host: localhost:3000
+schemes:
+  - http
+tags:
+  - name: Routes
+    description: Vehicle Routes
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: x-access-token
+paths:
+  api/user/:
+    post:
+      tags:
+        - Routes
+      parameters:
+        - in: body
+          name: route_name
+          schema:
+            type: object
+            required:
+              - route_name
+            properties:
+              route_name:
+                type: string
+      produces:
+        - application/json
+      summary: Create a new Route
+      responses:
+        201:
+          description: Created
+          schema:
+            type: object
+            properties:
+              self:
+                type: string
+              route_name:
+                type: string
+        409:
+          description: Bad request
+
+
+
