@@ -14,27 +14,25 @@ router.post("/", async (req, res) => {
   try {
     var results = null;
     results = await vehicle.createVehicle(number);
-    json_response = {
-      vehicles: results
-    };
+    json_response = results;
     res.status(201).json(json_response);
   } catch (e) {
-    json_response.message = e;
-    let code = e.statusCode || 502;
-    if (e._message == null && e.details[0].message) {
-      code = 400;
-      json_response.message = e.details[0].message;
+    if (e.statusCode == 409){
+      json_response.message = e.message;
+      json_response.developerMessage = e.developerMessage;
+      res.status(e.statusCode).json(json_response);
+  }
+   else {
       res.status(code).json(json_response);
-    } else {
-      res.status(code).json(json_response);
-    }
-    res.status(502).send();
+  }
+    
   }
 });
 
 validateVehicleNumber=(num)=>{
     console.log(num)
-    if(num.includes("-")){
+    
+    if(num && num.includes("-")){
         let set = num.split("-")
         console.log(set)
         if((set[0].length===2 || set[0].length===3 ) && set[1].length==4 ){

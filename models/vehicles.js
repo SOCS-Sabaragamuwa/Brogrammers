@@ -12,6 +12,9 @@ Vehicle.prototype.createVehicle = async function (number) {
     let query2 = "SELECT * FROM vehicle where number=$1;"
     return new Promise((async (resolve, reject) => {
         try {
+
+            let unique = await pool.query(query2, [number]);
+            if (unique.rowCount==0){
             let a = await pool.query(query, [number]);
             let {rows} = await pool.query(query2, [number]);
             console.log(rows)
@@ -22,12 +25,19 @@ Vehicle.prototype.createVehicle = async function (number) {
                     vehicle_number:ele.number
                 })
             })
-            resolve(se);
+            resolve(se[0]);
 
-        } catch (e) {
-            console.log(e);
-            logger.log(e);
-            reject(new ErrorHandler(502, "Internal Server Error"));
+        }else{
+            
+            reject({statusCode:409,message: `A vehicle with vehicle_number: ${number} already exists`,
+            developerMessage: `Vehicle creation failed because the vehicle_number: ${number} already exists`}
+         );
+
+        }
+    } catch (e) {
+        console.log(e);
+        logger.log(e);
+        reject(new ErrorHandler(502, "Internal Server Error"));
         }
     }));
 };
