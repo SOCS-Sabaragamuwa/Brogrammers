@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "user": "root",
+  "password": "",
+  "database": "airline",
+  "connectionLimit": 10,
+  "multipleStatements": true
+}
